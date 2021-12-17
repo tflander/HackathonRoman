@@ -24,7 +24,10 @@ namespace Katas
 
         public static string Add(string numeral1, string numeral2)
         {
-            var arabicResult = ConvertNumeralStringToInt(numeral1) + ConvertNumeralStringToInt(numeral2);
+            ValidateRomanString(numeral1);
+            ValidateRomanString(numeral2);
+
+            var arabicResult = ConvertRomanToInt(numeral1) + ConvertRomanToInt(numeral2);
             return IntToRomanConverter.ConvertIntToRoman(arabicResult);
         }
 
@@ -43,10 +46,8 @@ namespace Katas
             };
         }
 
-        public static int ConvertNumeralStringToInt(string numeral)
+        public static int ConvertRomanToInt(string numeral)
         {
-            ValidateNumeral(numeral);
-
             var arabicValue = 0;
             var numeralCharArr = numeral.ToCharArray();
             for (var index = 0; index < numeralCharArr.Length; index++)
@@ -71,7 +72,7 @@ namespace Katas
             return arabicValue;
         }
         
-        public static void ValidateNumeral(string numeral)
+        public static void ValidateRomanString(string numeral)
         {
             ValidateNumeralsForSubtraction(numeral);
 
