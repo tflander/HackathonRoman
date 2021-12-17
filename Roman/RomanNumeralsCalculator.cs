@@ -7,6 +7,12 @@ using System.Text;
 
 namespace Katas
 {
+    /*
+     * Three responsibilities:
+     *   - Addition
+     *   - Conversion
+     *   - Validation
+     */
     public static class RomanNumeralsCalculator
     {
         public const string ValidationFailureMessage = "Cannot repeat more than 3 times.";
@@ -16,88 +22,28 @@ namespace Katas
 
         public const string ValidationNumeralCannotBeSubtracted = "This numeral cannot be subtracted.";
 
-//The symbols 'I', 'X', 'C', and 'M' can be repeated at most 3 times in a row.
-//'V', 'L', and 'D' can never be repeated.
-//The '1' symbols('I', 'X', and 'C') can only be subtracted from the 2 next highest values
-//('IV' and 'IX', 'XL' and 'XC', 'CD' and 'CM').
-
-//As arabic numbers can be split into their constituent parts (1066 becomes 1 0 6 6),
-//so too can Roman numerals, just without the zero(1066 becomes MLXVI, or M (1000) LX(60) and VI(6)).
-
-//The '5' symbols('V', 'L', and 'D') can never be subtracted (5, 50, 500).
-
-//Only one subtraction can be made per numeral ('XC' is allowed, 'XXC', 'IXC' etc is not).
-
-//We have provided a reference table of the Roman numerals that you will have to use and their arabic number equivalents.
-
-
-
-// Numeral Number
-// I 1
-// V 5
-// X 10
-// L 50
-// C 100
-// D 500
-// M 1000
-        public static string add(string numeral1, string numeral2)
+        public static string Add(string numeral1, string numeral2)
         {
-            if (numeral1 == "I" && numeral2 == "I")
-            {
-                return "II";
-            }
-            
-            if (numeral1 == "V" && numeral2 == "V")
-            {
-                return "X";
-            }
-
-            if (numeral1 == "X" && numeral2 == "X")
-            {
-                return "XX";
-            }
-
-            return string.Empty;
+            var arabicResult = ConvertNumeralStringToInt(numeral1) + ConvertNumeralStringToInt(numeral2);
+            return IntToRomanConverter.ConvertIntToRoman(arabicResult);
         }
 
-        public static string convertIntToNumeralStringArray(int number)
+        private static int ConvertNumeralCharToInt(char numeral)
         {
-            var retValue = new StringBuilder();
-            var arabicValues = new List<int>() { 1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000 };
-            var romanDigits = new List<string>()
-                { "I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M" };
-
-            while (number > 0)
+            return numeral switch
             {
-                for (int i = arabicValues.Count() - 1; i >= 0; i--)
-                    if (number / arabicValues[i] >= 1)
-                    {
-                        number -= arabicValues[i];
-                        retValue.Append(romanDigits[i]);
-                        break;
-                    }
-            }
-
-            return retValue.ToString();
+                'I' => 1,
+                'V' => 5,
+                'X' => 10,
+                'L' => 50,
+                'C' => 100,
+                'D' => 500,
+                'M' => 1000,
+                _ => throw new ArgumentException()
+            };
         }
 
-        private static int convertNumeralCharToInt(char numeral)
-        {
-            switch (numeral)
-            {
-                case 'I': return 1;
-                case 'V': return 5;
-                case 'X': return 10;
-                case 'L': return 50;
-                case 'C': return 100;
-                case 'D': return 500;
-                case 'M': return 1000;
-                default:
-                    throw new ArgumentException();
-            }
-        }
-
-        public static int convertNumeralStringToInt(string numeral)
+        public static int ConvertNumeralStringToInt(string numeral)
         {
             ValidateNumeral(numeral);
 
@@ -106,10 +52,10 @@ namespace Katas
             for (var index = 0; index < numeralCharArr.Length; index++)
             {
                 var c = numeralCharArr[index];
-                var currentValue = convertNumeralCharToInt(c);
+                var currentValue = ConvertNumeralCharToInt(c);
                 var nextValue = index + 1 > numeralCharArr.Length - 1
                     ? 0
-                    : convertNumeralCharToInt(numeralCharArr[index + 1]);
+                    : ConvertNumeralCharToInt(numeralCharArr[index + 1]);
 
                 if (currentValue < nextValue)
                 {
@@ -124,12 +70,7 @@ namespace Katas
 
             return arabicValue;
         }
-
-        public static string ConvertIntToNumeralStringArray(int arabicValue)
-        {
-            return convertIntToNumeralStringArray(arabicValue);
-        }
-
+        
         public static void ValidateNumeral(string numeral)
         {
             ValidateNumeralsForSubtraction(numeral);
@@ -175,8 +116,8 @@ namespace Katas
             if (posOfNoSubtractChar >= 0 &&
                 posOfNoSubtractChar < numeral.Length - 1)
             {
-                var subtractCharValue = convertNumeralCharToInt(numeral[posOfNoSubtractChar]);
-                var nextCharValue = convertNumeralCharToInt(numeral[posOfNoSubtractChar + 1]);
+                var subtractCharValue = ConvertNumeralCharToInt(numeral[posOfNoSubtractChar]);
+                var nextCharValue = ConvertNumeralCharToInt(numeral[posOfNoSubtractChar + 1]);
 
                 if (nextCharValue > subtractCharValue)
                 {
@@ -191,9 +132,9 @@ namespace Katas
 
             for (var i = 0; i < numeral.Length - 2; i++)
             {
-                var currentVal = convertNumeralCharToInt(numeral[i]);
+                var currentVal = ConvertNumeralCharToInt(numeral[i]);
 
-                if (currentVal < convertNumeralCharToInt(numeral[i + 2]))
+                if (currentVal < ConvertNumeralCharToInt(numeral[i + 2]))
                 {
                     throw new ArgumentException("Only one subtraction can be made per numeral.");
                 }
