@@ -5,12 +5,12 @@ namespace ConsoleApp1
 {
     public class RomanStringValidator
     {
-        public const string ValidationFailureMessage = "Cannot repeat more than 3 times.";
-        public const string ValidationRepeatIllegalNumeralMessage = "Cannot repeat this numeral.";
-        public const string ValidationIllegalSubtractionMessage =
+        private const string ValidationFailureMessage = "Cannot repeat more than 3 times.";
+        private const string ValidationRepeatIllegalNumeralMessage = "Cannot repeat this numeral.";
+        private const string ValidationIllegalSubtractionMessage =
             "This numeral contains a subtraction higher than its next 2 highest values.";
 
-        public const string ValidationNumeralCannotBeSubtracted = "This numeral cannot be subtracted.";
+        private const string ValidationNumeralCannotBeSubtracted = "This numeral cannot be subtracted.";
         
         public static void ValidateRomanString(string numeral)
         {

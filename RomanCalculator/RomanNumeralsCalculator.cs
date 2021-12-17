@@ -7,12 +7,6 @@ using ConsoleApp1;
 
 namespace Katas
 {
-    /*
-     * Three responsibilities:
-     *   - Addition
-     *   - Conversion
-     *   - Validation
-     */
     public static class RomanNumeralsCalculator
     {
         public static string Add(string numeral1, string numeral2)
