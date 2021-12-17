@@ -1,4 +1,5 @@
 using System;
+using ConsoleApp1;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Katas
@@ -13,7 +14,7 @@ namespace Katas
         [DataRow("XIIII", "Input XIIII failed. Cannot repeat more than 3 times.")]
         public void MoreThan3ConsecutiveIdenticalNumeralsThrowsException(string numeral, string expectedExceptionMsg)
         {
-            Assert.ThrowsException<ArgumentException>(() => RomanNumeralsCalculator.ValidateRomanString(numeral),
+            Assert.ThrowsException<ArgumentException>(() => RomanStringValidator.ValidateRomanString(numeral),
                 expectedExceptionMsg);
         }
 
@@ -24,7 +25,7 @@ namespace Katas
         [DataRow("CDD", "Input CDD failed. Cannot repeat this numeral.")]
         public void RepeatingCertainNumeralsThrowsException(string numeral, string expectedExceptionMsg)
         {
-            Assert.ThrowsException<ArgumentException>(() => RomanNumeralsCalculator.ValidateRomanString(numeral),
+            Assert.ThrowsException<ArgumentException>(() => RomanStringValidator.ValidateRomanString(numeral),
                 expectedExceptionMsg);
         }
 
@@ -36,7 +37,7 @@ namespace Katas
         [DataRow("LM", "Input LM failed. This numeral contains a subtraction higher than its next 2 highest values.")]
         public void IllegalSubtractionsThrowException(string numeral, string expectedExceptionMsg)
         {
-            Assert.ThrowsException<ArgumentException>(() => RomanNumeralsCalculator.ValidateRomanString(numeral),
+            Assert.ThrowsException<ArgumentException>(() => RomanStringValidator.ValidateRomanString(numeral),
                 expectedExceptionMsg);
         }
 
@@ -46,7 +47,7 @@ namespace Katas
         [DataRow("DM", "Input DM failed.This numeral cannot be subtracted.")]
         public void IllegalNumeralPosition(string numeral, string expectedExceptionMsg)
         {
-            Assert.ThrowsException<ArgumentException>(() => RomanNumeralsCalculator.ValidateRomanString(numeral),
+            Assert.ThrowsException<ArgumentException>(() => RomanStringValidator.ValidateRomanString(numeral),
                 expectedExceptionMsg);
         }
 
@@ -55,7 +56,7 @@ namespace Katas
         [DataRow("IXL", "Only one subtraction can be made per numeral.")]
         public void MultipleSubtractionsNotAllowed(string numeral, string expectedExceptionMsg)
         {
-            Assert.ThrowsException<ArgumentException>(() => RomanNumeralsCalculator.ValidateRomanString(numeral),
+            Assert.ThrowsException<ArgumentException>(() => RomanStringValidator.ValidateRomanString(numeral),
                 expectedExceptionMsg);
         }        
     }
