@@ -27,49 +27,8 @@ namespace Katas
             ValidateRomanString(numeral1);
             ValidateRomanString(numeral2);
 
-            var arabicResult = ConvertRomanToInt(numeral1) + ConvertRomanToInt(numeral2);
+            var arabicResult = RomanToIntConverter.ConvertRomanToInt(numeral1) + RomanToIntConverter.ConvertRomanToInt(numeral2);
             return IntToRomanConverter.ConvertIntToRoman(arabicResult);
-        }
-
-        private static int ConvertNumeralCharToInt(char numeral)
-        {
-            return numeral switch
-            {
-                'I' => 1,
-                'V' => 5,
-                'X' => 10,
-                'L' => 50,
-                'C' => 100,
-                'D' => 500,
-                'M' => 1000,
-                _ => throw new ArgumentException()
-            };
-        }
-
-        public static int ConvertRomanToInt(string numeral)
-        {
-            var arabicValue = 0;
-            var numeralCharArr = numeral.ToCharArray();
-            for (var index = 0; index < numeralCharArr.Length; index++)
-            {
-                var c = numeralCharArr[index];
-                var currentValue = ConvertNumeralCharToInt(c);
-                var nextValue = index + 1 > numeralCharArr.Length - 1
-                    ? 0
-                    : ConvertNumeralCharToInt(numeralCharArr[index + 1]);
-
-                if (currentValue < nextValue)
-                {
-                    arabicValue -= currentValue;
-                }
-                else
-                {
-                    arabicValue += currentValue;
-                }
-
-            }
-
-            return arabicValue;
         }
         
         public static void ValidateRomanString(string numeral)
@@ -117,8 +76,8 @@ namespace Katas
             if (posOfNoSubtractChar >= 0 &&
                 posOfNoSubtractChar < numeral.Length - 1)
             {
-                var subtractCharValue = ConvertNumeralCharToInt(numeral[posOfNoSubtractChar]);
-                var nextCharValue = ConvertNumeralCharToInt(numeral[posOfNoSubtractChar + 1]);
+                var subtractCharValue = RomanToIntConverter.ConvertRomanCharToInt(numeral[posOfNoSubtractChar]);
+                var nextCharValue = RomanToIntConverter.ConvertRomanCharToInt(numeral[posOfNoSubtractChar + 1]);
 
                 if (nextCharValue > subtractCharValue)
                 {
@@ -133,9 +92,9 @@ namespace Katas
 
             for (var i = 0; i < numeral.Length - 2; i++)
             {
-                var currentVal = ConvertNumeralCharToInt(numeral[i]);
+                var currentVal = RomanToIntConverter.ConvertRomanCharToInt(numeral[i]);
 
-                if (currentVal < ConvertNumeralCharToInt(numeral[i + 2]))
+                if (currentVal < RomanToIntConverter.ConvertRomanCharToInt(numeral[i + 2]))
                 {
                     throw new ArgumentException("Only one subtraction can be made per numeral.");
                 }

@@ -1,4 +1,3 @@
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Katas
@@ -32,7 +31,7 @@ namespace Katas
         [DataRow("MDC", 1600)]
         public void ConvertToIntIsCorrect(string numeral, int expectedResult)
         {
-            var actualResult = RomanNumeralsCalculator.ConvertRomanToInt(numeral);
+            var actualResult = RomanToIntConverter.ConvertRomanToInt(numeral);
             Assert.AreEqual(expectedResult, actualResult);
         } 
         
